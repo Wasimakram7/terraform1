@@ -83,7 +83,7 @@ data "aws_subnets" "public" {
 
 /*  Public route table association  */
 resource "aws_route_table_association" "public_association" {
-  count          = length(var.var_vpc_subnet_info.public_subnets)
+  count          = length(data.aws_subnets.public.ids)
   route_table_id = aws_route_table.public_route.id
   subnet_id      = data.aws_subnets.public[count.index].ids
 }
@@ -108,7 +108,7 @@ data "aws_subnets" "private" {
 
 /*  Private route table association  */
 resource "aws_route_table_association" "private_association" {
-  count          = length(var.var_vpc_subnet_info.private_subnets)
+  count          = length(data.aws_subnets.private.ids)
   route_table_id = aws_route_table.private_route.id
   subnet_id      = data.aws_subnets.private[count.index].ids
 }
